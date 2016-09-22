@@ -20,6 +20,12 @@ def get_db():
     return g.sqlite_db
 
 
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
+
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""

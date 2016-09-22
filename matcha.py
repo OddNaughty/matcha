@@ -1,7 +1,7 @@
 # all the imports
 import os
 
-from flask import Flask
+from flask import Flask, render_template, url_for
 
 
 # create our little application :)
@@ -17,7 +17,14 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
+@app.route('/')
+def index():
+    login_url = url_for('login')
+    return render_template("index.html", login_url=login_url)
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
 from db import init_db
 
