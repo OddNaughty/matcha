@@ -1,8 +1,6 @@
 import sqlite3
 from flask import g
-
 from matcha import app
-
 
 def connect_db():
     """Connects to the specific database."""

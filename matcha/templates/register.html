@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="form-horizontal" action="{{ url_for('register') }}" method="post">
+              <fieldset>
+                <legend>Sign up</legend>
+                  {% if error %}
+                    <p class=error><strong>Error:</strong> {{ error['email'] }}
+                  {% endif %}
+                <div class="form-group">
+                  <label for="inputEmail" class="col-md-2 control-label">Email</label>
+
+                  <div class="col-md-10">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword" class="col-md-2 control-label">Password</label>
+
+                  <div class="col-md-10">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-10 col-md-offset-2">
+                      <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+            <p>Already signed up ? Go <a href="{{ url_for('login') }}">log in</a> !</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

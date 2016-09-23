@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-material-design.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ripples.min.css') }}">
+
+        <!-- My styles -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" />
+
+    <title>{% block title %}{% endblock %} - Matcha</title>
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div id="header">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Matcha</a>
+                </div>
+                {% block header %}
+                <div class="navbar-collapse collapse navbar-warning-collapse">
+                  <ul class="nav navbar-nav">
+                    <li><p class="navbar-text">Oh le beau header</p></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                  </ul>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <div id="content">{% block content %}{% endblock %}</div>
+    {% block footer %}
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div id="footer">
+                <p class="navbar-text">Regarde mon beau footer</p>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='material.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='ripples.min.js') }}"></script>
+    <script type="text/javascript">
+        ($.material.init());
+    </script>
+</body>
+</html>
