@@ -1,4 +1,4 @@
-from flask import url_for, render_template, request, flash
+from flask import url_for, render_template, request
 from matcha import app, controller
 
 @app.route('/')
@@ -14,8 +14,5 @@ def login():
 def register():
     error = None
     if request.method == "POST":
-        error = controller.do_register()
-        # error = {"email":"This is not a valid email"}
-    # flash("The method you used is get")
-    # flash("The method you used is kaka")
+        error = controller.do_register(request.form)
     return render_template("register.html", error=error)
