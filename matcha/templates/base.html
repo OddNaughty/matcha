@@ -12,6 +12,8 @@
     <!-- Bootstrap Material Design -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-material-design.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ripples.min.css') }}">
+    <!-- Snackbar -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='snackbar.min.css') }}" />
 
         <!-- My styles -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" />
@@ -41,11 +43,15 @@
     </nav>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
+          <div class="container">
+            <div class="row">
+                <ul class="flash_messages">
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+          </div>
       {% endif %}
     {% endwith %}
     <div id="content">{% block content %}{% endblock %}</div>
@@ -62,8 +68,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='material.min.js') }}"></script>
     <script src="{{ url_for('static', filename='ripples.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='snackbar.min.js') }}"></script>
     <script type="text/javascript">
         ($.material.init());
+        var flashed = $(".flash_messages li");
+        if (flashed.length !== 0) {
+            (flashed.ready(function() {
+                flashed.each(function () {
+                    $.snackbar({content: $(this).text(), timeout:2000, style: 'toast'});
+                    console.log(this);
+                });
+{#                ($.snackbar({content: "This is my awesome snackbar!"}));#}
+{#                alert("Flashed_messages");#}
+            }));
+        }
     </script>
 </body>
 </html>
