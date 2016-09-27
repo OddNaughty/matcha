@@ -1,9 +1,10 @@
+drop TABLE users;
 create table if not EXISTS Users (
-  id integer primary key NOT NULL,
-  mail text not null UNIQUE,
-  username text NOT NULL UNIQUE,
-  password text not null,
-  first_name text not null,
-  last_name text not null,
-  creation_time text NOT NULL DEFAULT(DATETIME('now', 'localtime'))
+  id SERIAL primary key NOT NULL ,
+  mail VARCHAR(254) not null UNIQUE,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  password CHAR(64) not null,
+  first_name VARCHAR(100) not null,
+  last_name VARCHAR(100) not null,
+  creation_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

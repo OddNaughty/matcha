@@ -4,7 +4,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'matcha.db'),
+    DATABASE= {"database": 'matcha', "user": 'cwagner'},
     SECRET_KEY='+qd=_k!t!t1qr*c7%v-x_m_)%py^3ulb=@9-9sjo7je%3nwevy',
     USERNAME='admin',
     PASSWORD='admin'

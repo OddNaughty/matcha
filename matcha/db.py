@@ -1,12 +1,11 @@
-import sqlite3
+import psycopg2
 from flask import g
 from matcha import app
 
 def connect_db():
     """Connects to the specific database."""
-    rv = sqlite3.connect(app.config['DATABASE'])
-    rv.execute("PRAGMA busy_timeout = 30000")
-    rv.row_factory = sqlite3.Row
+    rv = psycopg2.connect(**app.config['DATABASE'])
+    rv.autocommit = True
     return rv
 
 
@@ -14,22 +13,24 @@ def get_db():
     """Opens a new database connection if there is none yet for the
     current application context.
     """
-    if not hasattr(g, 'sqlite_db'):
-        g.sqlite_db = connect_db()
-    return g.sqlite_db
+    if not hasattr(g, 'db'):
+        g.db = connect_db()
+    return g.db
 
 
 def query_db(query, args=(), one=False):
-    cur = get_db().execute(query, args)
-    rv = cur.fetchall()
+    cursor = get_db().cursor()
+    cur = cursor.execute(query, args)
+    rv = cur.fetchall() if cur else None
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
-    if hasattr(g, 'sqlite_db'):
-        g.sqlite_db.close()
+    if hasattr(g, 'db'):
+        g.db.close()
+
 
 def init_db():
     db = get_db()
