@@ -34,7 +34,21 @@
                     <li><p class="navbar-text">Oh le beau header</p></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
+                  {% if session['user'] %}
+                      <li class="dropdown">
+                          <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                            {{ session['user']['username'] }}
+                            <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('register') }}">Settings</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                          </ul>
+                    </li>
+                  {% else %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>
+                  {% endif %}
                   </ul>
                 </div>
                 {% endblock %}
@@ -78,8 +92,6 @@
                     $.snackbar({content: $(this).text(), timeout:2000, style: 'toast'});
                     console.log(this);
                 });
-{#                ($.snackbar({content: "This is my awesome snackbar!"}));#}
-{#                alert("Flashed_messages");#}
             }));
         }
     </script>

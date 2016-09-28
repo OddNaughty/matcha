@@ -1,10 +1,10 @@
-import psycopg2
+import psycopg2, psycopg2.extras
 from flask import g
 from matcha import app
 
 def connect_db():
     """Connects to the specific database."""
-    rv = psycopg2.connect(**app.config['DATABASE'])
+    rv = psycopg2.connect(**app.config['DATABASE'], cursor_factory=psycopg2.extras.DictCursor)
     rv.autocommit = True
     return rv
 
@@ -18,12 +18,11 @@ def get_db():
     return g.db
 
 
-def query_db(query, args=(), one=False):
+def query_db(query, args=(), fetch=True, one=False):
     cursor = get_db().cursor()
-    cur = cursor.execute(query, args)
-    rv = cur.fetchall() if cur else None
-    cur.close()
-    return (rv[0] if rv else None) if one else rv
+    cursor.execute(query, args)
+    rv = cursor.fetchone() if one else cursor.fetchall() if fetch else None
+    return rv
 
 @app.teardown_appcontext
 def close_db(error):

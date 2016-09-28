@@ -15,25 +15,25 @@
                 <div class="form-group">
                   <label for="inputUsername" class="col-md-2 control-label">Username</label>
                   <div class="col-md-10">
-                    <input name="username" type="text" class="form-control" id="inputUsername" placeholder="Username" required autofocus>
+                    <input name="username" type="text" class="form-control" id="inputUsername" placeholder="Username" required autofocus {% if datas %} value="{{ datas['username'] }}" {% endif %}>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputFirstName" class="col-md-2 control-label">First Name</label>
                   <div class="col-md-10">
-                    <input name="firstname" type="text" class="form-control" id="inputFirstName" placeholder="First Name" required>
+                    <input name="firstname" type="text" class="form-control" id="inputFirstName" placeholder="First Name" required {% if datas %} value="{{ datas['firstname'] }}" {% endif %}>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputLastName" class="col-md-2 control-label">Last Name</label>
                   <div class="col-md-10">
-                    <input name="lastname" type="text" class="form-control" id="inputLastName" placeholder="Last Name" required>
+                    <input name="lastname" type="text" class="form-control" id="inputLastName" placeholder="Last Name" required {% if datas %} value="{{ datas['lastname'] }}" {% endif %}>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail" class="col-md-2 control-label">Email</label>
                   <div class="col-md-10">
-                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email" required {% if datas %} value="{{ datas['email'] }}" {% endif %}>
                   </div>
                 </div>
                   <div class="form-group">
