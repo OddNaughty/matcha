@@ -24,7 +24,8 @@ class User(object):
         return self.user
 
     def get_by_id(self, id):
-        pass
+        query = "SELECT * FROM Users WHERE users.id=%s"
+        return db.query_db(query, args=(id,), one=True)
 
     def get_by_username(self, username):
         query = "SELECT * FROM Users WHERE users.username=%s"
@@ -47,4 +48,4 @@ class User(object):
         new_password = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
         query = "UPDATE Users SET password = %s WHERE id = %s"
         res = db.query_db(query, (hash_password(new_password), self.user['id']), fetch=False)
-        # mail.send_password_reset(self.user['mail'], new_password)
+        mail.send_password_reset(self.user['mail'], new_password)

@@ -1,4 +1,4 @@
-from flask import session, flash
+from flask import session, flash, g
 import re, hashlib
 
 from matcha import models
@@ -49,6 +49,9 @@ def do_login(datas):
     if not user or not user.user: errors["Email"] = "User with this email don't exists"; return res
     if check_password(user.user['password'], datas['password']) is False: errors["Password"] = "The password don't match"; return res
     session['user'] = dict(user.user)
+    print(session['user'])
+    # g.logged_user = user
+    # print(g.logged_user)
     flash("You are successfully logged in !")
     return res
 
@@ -71,6 +74,7 @@ def do_lost_password(datas):
     flash("A mail containing the reseted password has been send !")
     return res
 
-
 def do_logout():
     session.pop('user')
+    # print(g.logged_user)
+    # g.pop('logged_user')

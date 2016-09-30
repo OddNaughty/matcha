@@ -41,7 +41,7 @@
                             <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('register') }}">Settings</a></li>
+                            <li><a href="{{ url_for('settings') }}">Settings</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ url_for('logout') }}">Logout</a></li>
                           </ul>
@@ -59,11 +59,11 @@
       {% if messages %}
           <div class="container">
             <div class="row">
-                <ul class="flash_messages">
+                <div class="flash_messages">
                 {% for message in messages %}
-                  <li>{{ message }}</li>
+                  <div style="display: none">{{ message }}</div>
                 {% endfor %}
-                </ul>
+                </div>
             </div>
           </div>
       {% endif %}
@@ -85,15 +85,21 @@
     <script src="{{ url_for('static', filename='snackbar.min.js') }}"></script>
     <script type="text/javascript">
         ($.material.init());
-        var flashed = $(".flash_messages li");
+        var flashed = $(".flash_messages div");
         if (flashed.length !== 0) {
             (flashed.ready(function() {
                 flashed.each(function () {
-                    $.snackbar({content: $(this).text(), timeout:2000, style: 'toast'});
-                    console.log(this);
+                    $.snackbar({content: $(this).text(), timeout:0, style: 'toast'});
                 });
             }));
         }
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log('prout');
+          console.log(position.coords.latitude, position.coords.longitude);
+        }, function (error) {
+            console.log("Error");
+        });
     </script>
 </body>
 </html>

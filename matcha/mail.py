@@ -1,21 +1,29 @@
-# Import smtplib for the actual sending function
 import smtplib
-
-# Import the email modules we'll need
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def send_mail(to, subject, message):
-    # Open a plain text file for reading.  For this example, assume that
-    # the text file contains only ASCII characters.
-    msg = MIMEText(message)
+from matcha import app
 
+def send_mail(to_address, subject, body):
+    login = app.config['SMTP_LOGIN']
+    password = app.config['SMTP_PASSWORD']
+    from_address = "staff@matcha.com"
+
+    # Bind to server
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(login, password)
+
+    msg = MIMEMultipart()
+    msg['From'] = from_address
+    msg['To'] = to_address
     msg['Subject'] = subject
-    msg['From'] = "matcha@matcha.matcha"
-    msg['To'] = to
 
-    s = smtplib.SMTP('localhost')
-    s.send_message(msg)
-    s.quit()
+    msg.attach(MIMEText(body, 'html'))
+
+    text = msg.as_string()
+    server.sendmail(from_address, to_address, text)
+    server.quit()
 
 def send_password_reset(to, password):
     message = "Hello, your password has been reset to {}".format(password)

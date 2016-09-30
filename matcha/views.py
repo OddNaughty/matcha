@@ -1,5 +1,5 @@
-from flask import url_for, render_template, request, redirect
-from matcha import app, controller
+from flask import url_for, render_template, request, redirect, g
+from matcha import app, controller, utils
 
 @app.route('/')
 def index():
@@ -35,3 +35,14 @@ def login_lost_password():
         res = controller.do_lost_password(request.form)
         if not res.get('error'): return redirect(url_for('login'))
     return render_template("login_lost_password.html", error=res.get('error'), datas=res.get('datas'))
+
+@app.route('/settings', methods=["GET", "POST"])
+@utils.login_required
+def settings():
+    res = {}
+    if request.method == "POST":
+        res = controller.do_register(request.form)
+        if not res.get('error'): return redirect(url_for('index'))
+    res['datas'] = dict(g.user.user)
+    print(res['datas'])
+    return render_template("settings.html", error=res.get('error'), datas=res.get('datas'))

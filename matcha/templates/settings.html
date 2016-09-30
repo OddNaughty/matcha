@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="form-horizontal" action="{{ url_for('settings') }}" method="post">
+              <fieldset>
+                <legend>My informations</legend>
+                  {% if error %}
+                      {% for key, value in error.items() %}
+                        <p class="text-danger">{{ key }}: {{ value }}</p>
+                      {% endfor %}
+                  {% endif %}
+                <div class="form-group">
+                  <label for="inputUsername" class="col-md-2 control-label">Username</label>
+                  <div class="col-md-10">
+                    <input name="username" type="text" class="form-control" id="inputUsername" placeholder="Username" required autofocus {% if datas %} value="{{ datas['username'] }}" {% endif %}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputFirstName" class="col-md-2 control-label">First Name</label>
+                  <div class="col-md-10">
+                    <input name="firstname" type="text" class="form-control" id="inputFirstName" placeholder="First Name" required {% if datas %} value="{{ datas['first_name'] }}" {% endif %}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputLastName" class="col-md-2 control-label">Last Name</label>
+                  <div class="col-md-10">
+                    <input name="lastname" type="text" class="form-control" id="inputLastName" placeholder="Last Name" required {% if datas %} value="{{ datas['last_name'] }}" {% endif %}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                  <div class="col-md-10">
+                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email" required {% if datas %} value="{{ datas['mail'] }}" {% endif %}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-10 col-md-offset-2">
+                      <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
