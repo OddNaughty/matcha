@@ -1,4 +1,3 @@
-drop TABLE users;
 create table if not EXISTS Users (
   id SERIAL primary key NOT NULL ,
   mail VARCHAR(254) not null UNIQUE,

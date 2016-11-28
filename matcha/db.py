@@ -4,7 +4,7 @@ from matcha import app
 
 def connect_db():
     """Connects to the specific database."""
-    rv = psycopg2.connect(**app.config['DATABASE'], cursor_factory=psycopg2.extras.DictCursor)
+    rv = psycopg2.connect(**(app.config['DATABASE']), cursor_factory=psycopg2.extras.DictCursor)
     rv.autocommit = True
     return rv
 

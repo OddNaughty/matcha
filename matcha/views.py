@@ -44,5 +44,4 @@ def settings():
         res = controller.do_register(request.form)
         if not res.get('error'): return redirect(url_for('index'))
     res['datas'] = dict(g.user.user)
-    print(res['datas'])
     return render_template("settings.html", error=res.get('error'), datas=res.get('datas'))
