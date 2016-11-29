@@ -1,59 +1,60 @@
 {% extends "base.html" %}
 {% block title %}Sign up{% endblock %}
 {% block content %}
-<div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <form class="form-horizontal" action="{{ url_for('register') }}" method="post">
-              <fieldset>
-                <legend>Sign up</legend>
-                  {% if error %}
-                      {% for key, value in error.items() %}
-                        <p class="text-danger">{{ key }}: {{ value }}</p>
-                      {% endfor %}
-                  {% endif %}
-                <div class="form-group">
-                  <label for="inputUsername" class="col-md-2 control-label">Username</label>
-                  <div class="col-md-10">
-                    <input name="username" type="text" class="form-control" id="inputUsername" placeholder="Username" required autofocus {% if datas %} value="{{ datas['username'] }}" {% endif %}>
-                  </div>
+        <h3>Sign up</h3>
+    <div class="divider"></div>
+    </div>
+    <div class="row">
+        <div class="section">
+        {% if error %}
+            {% for key, value in error.items() %}
+                <p class="red-text">{{ key }}: {{ value }}</p>
+            {% endfor %}
+        {% endif %}
+        <form class="col s6" action="{{ url_for('register') }}" method="post">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username" type="text" class="validate" name="username" required autofocus {% if datas %} value="{{ datas['username'] }}" {% endif %}>
+                    <label for="username">Username</label>
                 </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="col-md-2 control-label">First Name</label>
-                  <div class="col-md-10">
-                    <input name="firstname" type="text" class="form-control" id="inputFirstName" placeholder="First Name" required {% if datas %} value="{{ datas['firstname'] }}" {% endif %}>
-                  </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="firstname" type="text" class="validate" name="firstname" required {% if datas %} value="{{ datas['firstname'] }}" {% endif %}>
+                    <label for="firstname">First Name</label>
                 </div>
-                <div class="form-group">
-                  <label for="inputLastName" class="col-md-2 control-label">Last Name</label>
-                  <div class="col-md-10">
-                    <input name="lastname" type="text" class="form-control" id="inputLastName" placeholder="Last Name" required {% if datas %} value="{{ datas['lastname'] }}" {% endif %}>
-                  </div>
+                <div class="input-field col s12">
+                    <input id="lastname" type="text" class="validate" name="lastname" required {% if datas %} value="{{ datas['lastname'] }}" {% endif %}>
+                    <label for="firstname">Last Name</label>
                 </div>
-                <div class="form-group">
-                  <label for="inputEmail" class="col-md-2 control-label">Email</label>
-                  <div class="col-md-10">
-                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email" required {% if datas %} value="{{ datas['email'] }}" {% endif %}>
-                  </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate" name="email" required {% if datas %} value="{{ datas['email'] }}" {% endif %}>
+                    <label for="email">Email</label>
                 </div>
-                  <div class="form-group">
-                  <label for="inputPassword" class="col-md-2 control-label">Password</label>
-                  <div class="col-md-10">
-                    <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password" required pattern=".{5,}">
-                      <p class="help-block">5 characters minimum</p>
-                  </div>
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="password" pattern=".{5,}" required>
+                    <label for="password" data-error="Minimum 5 characters">Password</label>
                 </div>
-                <div class="form-group">
-                  <div class="col-md-10 col-md-offset-2">
-                      <div class="pull-right">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                  </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Lost Password ?
+                        <i class="material-icons right">email</i>
+                    </button>
                 </div>
-              </fieldset>
-            </form>
+                <div class="col s6">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        </div>
+        <div class="col s12">
             <p>Already signed up ? Go <a href="{{ url_for('login') }}">log in</a> !</p>
         </div>
     </div>
-</div>
 {% endblock %}

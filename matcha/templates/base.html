@@ -3,49 +3,44 @@
 <head>
     {% block head %}
     <!-- Material Design fonts -->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-
+{#    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">#}
+{#    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">#}
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}"   media="screen,projection">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Bootstrap Material Design -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-material-design.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ripples.min.css') }}">
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">#}
+{#    <!-- Bootstrap Material Design -->#}
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-material-design.min.css') }}">#}
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ripples.min.css') }}">#}
     <!-- Snackbar -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='snackbar.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/snackbar.min.css') }}" />
 
-        <!-- My styles -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- My styles -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" />
 
     <title>{% block title %}{% endblock %} - Matcha</title>
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div id="header">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Matcha</a>
-                </div>
+<header>
+    <ul id="dropdown-header" class="dropdown-content">
+        <li><a href="{{ url_for('settings') }}">Settings</a></li>
+        <li class="divider"></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a class="brand-logo" href="/">Matcha</a>
                 {% block header %}
                 <div class="navbar-collapse collapse navbar-warning-collapse">
-                  <ul class="nav navbar-nav">
-                    <li><p class="navbar-text">Oh le beau header</p></li>
-                  </ul>
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="right hide-on-med-and-down">
                   {% if session['user'] %}
-                      <li class="dropdown">
-                          <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                            {{ session['user']['username'] }}
-                            <span class="caret"></span>
-                          </a>
-                          <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('settings') }}">Settings</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                          </ul>
-                    </li>
+                      <li><a class="dropdown-button" href="#!" data-beloworigin="true" data-activates="dropdown-header">{{ session['user']['username'] }}<i class="material-icons right">arrow_drop_down</i></a></li>
                   {% else %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>
                   {% endif %}
@@ -53,8 +48,8 @@
                 </div>
                 {% endblock %}
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
           <div class="container">
@@ -68,38 +63,44 @@
           </div>
       {% endif %}
     {% endwith %}
-    <div id="content">{% block content %}{% endblock %}</div>
+</header>
+
+<main>
+    <div id="content" class="container">{% block content %}{% endblock %}</div>
+</main>
+
+<footer class="page-footer">
     {% block footer %}
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
-            <div id="footer">
-                <p class="navbar-text">Regarde mon beau footer</p>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 center-align white-text">
+                Regarde mon beau footer
             </div>
         </div>
-    </nav>
+    </div>
     {% endblock %}
-    <script src="https://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='material.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='ripples.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='snackbar.min.js') }}"></script>
-    <script type="text/javascript">
-        ($.material.init());
-        var flashed = $(".flash_messages div");
-        if (flashed.length !== 0) {
-            (flashed.ready(function() {
-                flashed.each(function () {
-                    $.snackbar({content: $(this).text(), timeout:0, style: 'toast'});
-                });
-            }));
-        }
+</footer>
+<script src="https://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/snackbar.min.js') }}"></script>
+<script type="text/javascript">
+$( document ).ready(function () {
+    var flashed = $(".flash_messages div");
+    if (flashed.length !== 0) {
+        (flashed.ready(function() {
+            flashed.each(function () {
+                $.snackbar({content: $(this).text(), timeout:0, style: 'toast'});
+            });
+        }));
+    }
+    $(".dropdown-button").dropdown();
+});
 
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log('prout');
-          console.log(position.coords.latitude, position.coords.longitude);
-        }, function (error) {
-            console.log("Error");
-        });
-    </script>
+    navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position.coords.latitude, position.coords.longitude);
+    }, function (error) {
+        console.log("Error");
+    });
+</script>
 </body>
 </html>

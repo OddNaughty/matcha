@@ -41,7 +41,7 @@ def login_lost_password():
 def settings():
     res = {}
     if request.method == "POST":
-        res = controller.do_register(request.form)
-        if not res.get('error'): return redirect(url_for('index'))
-    res['datas'] = dict(g.user.user)
+        res = controller.do_settings(request.form)
+        if not res.get('error'): return redirect(url_for('settings'))
+    res['datas'] = g.user
     return render_template("settings.html", error=res.get('error'), datas=res.get('datas'))
